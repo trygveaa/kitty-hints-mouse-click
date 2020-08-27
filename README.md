@@ -24,8 +24,9 @@ map kitty_mod+y kitten hints --type emoji --customize-processing hints_mouse_cli
 
 This is used just like the standard hints kitten, except for these differences:
 
-- You have to specify the mouse button you want to use as the last argument.
-  This can be `left`, `middle` or `right`.
+- You can specify the mouse button you want to use as the last argument. This
+  can be `left`, `middle`, `right`, `scroll_up`, `scroll_down`, `scroll_left`,
+  `scroll_right`, `back` or `forward`. Defaults to `left` if not specified.
 - The `--type` option supports `emoji` and `emoji_char_and_name` in addition to
   the standard types. `emoji` will match emoji characters.
   `emoji_char_and_name` will in addition match the regex `:[a-z0-9_+-]+:` which

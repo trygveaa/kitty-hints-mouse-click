@@ -4,17 +4,20 @@ from kittens.hints.main import functions_for, regex_finditer
 from kitty.fast_data_types import (
     wcswidth,
     send_mouse_event,
-    GLFW_MOUSE_BUTTON_LEFT,
-    GLFW_MOUSE_BUTTON_MIDDLE,
-    GLFW_MOUSE_BUTTON_RIGHT,
     PRESS,
     RELEASE,
 )
 
 button_map = {
-    "left": GLFW_MOUSE_BUTTON_LEFT,
-    "middle": GLFW_MOUSE_BUTTON_MIDDLE,
-    "right": GLFW_MOUSE_BUTTON_RIGHT,
+    "left": 1,
+    "middle": 2,
+    "right": 3,
+    "scroll_up": 4,
+    "scroll_down": 5,
+    "scroll_left": 6,
+    "scroll_right": 7,
+    "back": 8,
+    "forward": 9,
 }
 
 
