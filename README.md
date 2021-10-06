@@ -11,7 +11,7 @@ you to send mouse click events to the program running in the terminal emulator.
 Place the `hints_mouse_click.py` file in the same directory as `kitty.conf`.
 
 If you want to match against emojis, you have to install the
-[demoji](https://pypi.org/project/demoji/) package.
+[emoji](https://pypi.org/project/emoji/) package.
 
 Map a key to launch the hints kitten with this processor. E.g. for using
 `kitty_mod+y` to right click on emojis add this to `kitty.conf`:

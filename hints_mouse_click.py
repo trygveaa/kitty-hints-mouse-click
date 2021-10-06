@@ -27,17 +27,14 @@ def mark(text, args, Mark, extra_cli_args, *a):
         print(f"You must specify one of: {', '.join(button_map.keys())}")
         return
     if args.type == "emoji" or args.type == "emoji_char_and_name":
-        import demoji
+        import emoji
 
-        if demoji.last_downloaded_timestamp() is None:
-            demoji.download_codes()
-        demoji.set_emoji_pattern()
         if args.type == "emoji":
-            regex = demoji._EMOJI_PAT
+            regex = emoji.get_emoji_regexp()
         else:
             emoji_name_pattern = r":[a-z0-9_+-]+:"
             regex = re.compile(
-                r"{}|{}".format(demoji._EMOJI_PAT.pattern, emoji_name_pattern)
+                r"{}|{}".format(emoji.get_emoji_regexp().pattern, emoji_name_pattern)
             )
         args.minimum_match_length = 1
     else:
