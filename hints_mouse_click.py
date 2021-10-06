@@ -32,9 +32,9 @@ def mark(text, args, Mark, extra_cli_args, *a):
         if args.type == "emoji":
             regex = emoji.get_emoji_regexp()
         else:
-            emoji_name_pattern = r":[a-z0-9_+-]+:"
+            emoji_name_pattern = r"(:[a-z0-9_+-]+:)"
             regex = re.compile(
-                r"{}|{}".format(emoji.get_emoji_regexp().pattern, emoji_name_pattern)
+                r"(?P<all>{}|{})".format(emoji.get_emoji_regexp().pattern, emoji_name_pattern)
             )
         args.minimum_match_length = 1
     else:
