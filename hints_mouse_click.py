@@ -1,12 +1,10 @@
 import re
 from functools import partial
-from kittens.hints.main import functions_for, regex_finditer
-from kitty.fast_data_types import (
-    wcswidth,
-    send_mouse_event,
-    PRESS,
-    RELEASE,
-)
+from typing import Any, Generator, Sequence, Type
+
+from kittens.hints.main import Mark, functions_for, regex_finditer
+from kitty.boss import Boss
+from kitty.fast_data_types import PRESS, RELEASE, send_mouse_event, wcswidth
 
 button_map = {
     "left": 1,
@@ -21,7 +19,9 @@ button_map = {
 }
 
 
-def mark(text, args, Mark, extra_cli_args, *a):
+def mark(
+    text: str, args: Any, Mark: Type[Mark], extra_cli_args: Sequence[str]
+) -> Generator[Mark, None, None]:
     if extra_cli_args and extra_cli_args[0] not in button_map:
         print(f"The key `{extra_cli_args[0]}` is unknown.")
         print(f"You must specify one of: {', '.join(button_map.keys())}")
@@ -34,7 +34,9 @@ def mark(text, args, Mark, extra_cli_args, *a):
         else:
             emoji_name_pattern = r"(:[a-z0-9_+-]+:)"
             regex = re.compile(
-                r"(?P<all>{}|{})".format(emoji.get_emoji_regexp().pattern, emoji_name_pattern)
+                r"(?P<all>{}|{})".format(
+                    emoji.get_emoji_regexp().pattern, emoji_name_pattern
+                )
             )
         args.minimum_match_length = 1
     else:
@@ -50,16 +52,23 @@ def mark(text, args, Mark, extra_cli_args, *a):
         yield Mark(idx, s, e, mark_text, {"x": x, "y": y})
 
 
-def handle_result(args, data, target_window_id, boss, extra_cli_args, *a):
+def handle_result(
+    args: list[str],
+    answer: dict[str, Any],
+    target_window_id: int,
+    boss: Boss,
+    extra_cli_args: list[str],
+) -> None:
     w = boss.window_id_map.get(target_window_id)
-    button_name = extra_cli_args[0] if extra_cli_args else "left"
-    for coords in data["groupdicts"]:
-        send = partial(
-            send_mouse_event,
-            w.screen,
-            coords["x"],
-            coords["y"],
-            button_map[button_name],
-        )
-        send(PRESS, 0)
-        send(RELEASE, 0)
+    if w:
+        button_name = extra_cli_args[0] if extra_cli_args else "left"
+        for coords in answer["groupdicts"]:
+            send = partial(
+                send_mouse_event,
+                w.screen,
+                coords["x"],
+                coords["y"],
+                button_map[button_name],
+            )
+            send(PRESS, 0)
+            send(RELEASE, 0)
